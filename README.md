@@ -3,15 +3,21 @@ Smart-meter-P1
 
 Readout of Dutch smart meter P1-port using Arduino and logging to EmonCMS
 
-* What do you need?
-Any Arduino, although a Duemilanove might not work due to high memory usage(>16k)
-A RJ11 cable (check if it has 4 wires!)
+What do you need?
+-----------------
+
+* Any Arduino, although a Duemilanove might not work due to high memory usage(>16k)
+* A RJ11 cable (check if it has 4 wires!)
 
 Optionally:
-Arduino ethernet shield (Wiznet based)
-A computer or server running EmonCMS (www.openenergymonitor.org)
+-----------
 
-* How does it work?
+* Arduino ethernet shield (Wiznet based)
+* A computer or server running EmonCMS (www.openenergymonitor.org)
+
+How does it work?
+-----------------
+
 During the setup process after powering the Arduino, 5volt is enabled to pin4. This in turn enables the logging from the Smart Meter. Once the Smart Meter has ended sending the telegram, the Arduino (tries to) decode it.
 
 * Will it work for me?
