@@ -31,3 +31,8 @@ Are there any issues?
 An Arduino is really not suitable for large string operations, but it kinda works in my situation. I'm suspecting that larger P1 telegram messages might not fully work. Also, the first telegram it receives should really be ignored, although that could be a timing issue.
 
 Additions or fixes to my code are more than welcome. Just know that this is my third Arduino project and that most code has been copied from much smarter and more capable developers.
+
+Todo
+---------------------
+* Implement Stream.readStringUntil() function (requires Arduino 1.0.1)
+* Remove char2string part
