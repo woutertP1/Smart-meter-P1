@@ -1,5 +1,6 @@
 /*
 -------------How to wire Arduino to Smart meter using RJ11 cable-------------
+Note: make sure to place a small resistor between between 5V & ground. Current from an Arduino output pin is 40mA, while 30mA is allowed on the P1 port.
 Yellow to pin 9
 Red to ground
 Black to pin  4
