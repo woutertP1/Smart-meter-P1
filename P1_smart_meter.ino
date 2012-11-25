@@ -34,20 +34,20 @@ EthernetClient client;
 
 const int requestPin =  4;
 int incomingByte = 0;
-int T1_pos;
-int T2_pos;
-int T7_pos;
-int T8_pos;
+int pos181;
+int pos182;
+int pos281;
+int pos282;
 int P1_pos;
 int P2_pos;
 String inputString;
-String T1;
-String T2;
-String T7;
-String T8;
+String T181;
+String T182;
+String T281;
+String T282;
 String P1;
 String P2;
-String outputString;
+int counter = 0;
 
 SoftwareSerial mySerial(9, 8, true); // RX, TX, inverted
 
@@ -80,23 +80,23 @@ void loop () {
    if (inputString.length() > 100) {
       //Serial.println(inputString);
       
-      T1_pos = inputString.indexOf("1-0:1.8.1", 0);
-      T1 = inputString.substring(T1_pos + 10, T1_pos + 19);
-      Serial.println("T1 = " + T1);
+      pos181 = inputString.indexOf("1-0:1.8.1", 0);
+      T181 = inputString.substring(pos181 + 10, pos181 + 17);
+      Serial.println("T181 = " + T181);
  
-      T2_pos = inputString.indexOf("1-0:1.8.2", T1_pos + 1);
-      T2 = inputString.substring(T2_pos + 10, T2_pos + 19);
-      Serial.println("T2 = " + T2);
+      pos182 = inputString.indexOf("1-0:1.8.2", pos181 + 1);
+      T182 = inputString.substring(pos182 + 10, pos182 + 17);
+      Serial.println("T182 = " + T182);
       
-      T7_pos = inputString.indexOf("1-0:2.8.1", T2_pos + 1);
-      T7 = inputString.substring(T7_pos + 10, T7_pos + 19);
-      Serial.println("T7 = " + T7);
+      pos281 = inputString.indexOf("1-0:2.8.1", pos182 + 1);
+      T281 = inputString.substring(pos281 + 10, pos281 + 17);
+      Serial.println("T281 = " + T281);
       
-      T8_pos = inputString.indexOf("1-0:2.8.2", T7_pos + 1);
-      T8 = inputString.substring(T8_pos + 10, T8_pos + 19);
-      Serial.println("T8 = " + T8);
+      pos282 = inputString.indexOf("1-0:2.8.2", pos281 + 1);
+      T282 = inputString.substring(pos282 + 10, pos282 + 17);
+      Serial.println("T282 = " + T282);
       
-      P1_pos = inputString.indexOf("1-0:1.7.0", T8_pos + 1);
+      P1_pos = inputString.indexOf("1-0:1.7.0", pos282 + 1);
       P1 = inputString.substring(P1_pos + 10, P1_pos + 17);
       Serial.println("P1 = " + P1);
       
@@ -104,18 +104,36 @@ void loop () {
       P2 = inputString.substring(P2_pos + 10, P2_pos + 17);
       Serial.println("P2 = " + P2);
       
-      outputString = "GET /emoncms3/api/post?apikey=c2bc8720aa9e34cd9a661b1a7f400531&json={T1:" + T1 + ",T2:" + T2 + ",T7:" + T7 + ",T8:" + T8 + ",P1:" + P1 + ",P2:" + P2 + "} HTTP/1.1";
+      Serial.println(counter);
+      
       httpRequest(); 
       inputString = "0";
       delay(1000);
       client.stop();
+ 
+      if (counter < 6)
+      {
+        counter++;
+      }
+      else
+      {
+        counter = 0;
+      }    
    }
 }
 
 void httpRequest() {
   // if there's a successful connection:
   if (client.connect(server, 80)) {
-    client.println(outputString);
+ 
+      if ( counter < 6 ) {
+        client.println("GET /emoncms3/api/post?apikey=c2bc8720aa9e34cd9a661b1a7f400531&json={P1:" + P1 + ",P2:" + P2 + "} HTTP/1.1");
+        Serial.println("GET /emoncms3/api/post?apikey=c2bc8720aa9e34cd9a661b1a7f400531&json={P1:" + P1 + ",P2:" + P2 + "} HTTP/1.1");
+      }
+      if ( counter > 5 ) {
+        client.println("GET /emoncms3/api/post?apikey=c2bc8720aa9e34cd9a661b1a7f400531&json={T1:" + T181 + ",T2:" + T182 + ",T7:" + T281 + ",T8:" + T282 + ",P1:" + P1 + ",P2:" + P2 + "} HTTP/1.1");
+        Serial.println("GET /emoncms3/api/post?apikey=c2bc8720aa9e34cd9a661b1a7f400531&json={T1:" + T181 + ",T2:" + T182 + ",T7:" + T281 + ",T8:" + T282 + ",P1:" + P1 + ",P2:" + P2 + "} HTTP/1.1");
+      }
     client.println("Host: 192.168.1.150");
     client.println("User-Agent: arduino-ethernet");
     client.println("Connection: close");
