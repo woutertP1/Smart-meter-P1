@@ -29,7 +29,7 @@ I don't have a gasmeter, so if you want to read that from your Smart Meter, you'
 Are there any issues?
 ---------------------
 
-An Arduino is really not suitable for large string operations, but it kinda works in my situation. I'm suspecting that larger P1 telegram messages might not fully work. Also, the first telegram it receives should really be ignored, although that could be a timing issue. I have been running my setup for several weeks nonstop now and it still functions absolutely perfect. The Arduino continues to send updates to EmonCMS, even after server-reboots.
+An Arduino is really not suitable for large string operations, but it kinda works in my situation. I'm suspecting that larger P1 telegram messages (with length >1) might not fully work. Also, the first telegram it receives should really be ignored, although that could be a timing issue. I have been running my setup for several weeks nonstop now and it still functions absolutely perfect. The Arduino continues to send updates to EmonCMS, even after server-reboots.
 
 Additions or fixes to my code are more than welcome. Just know that this is my third Arduino project and that most code has been copied from much smarter and more capable developers.
 
@@ -37,7 +37,4 @@ Also, if you ruin your P1 port or Smart Meter: not my problem.
 
 Todo
 ---------------------
-* Implement Stream.readStringUntil() function (requires Arduino 1.0.1)
-* Remove char2string part
-* Try solution using HardwareSerial (requires Arduino 1.0.2)
-* Find time & priority to actually to implement improvements :)
+* Nothing. I have bought a Plugwise Smile P1 and will use that to replace the Arduino.
